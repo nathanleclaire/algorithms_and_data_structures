@@ -8,6 +8,8 @@
 #define QUICK "quick"
 #define MERGE "merge"
 
+#define SORT_OPTION_MAX_SIZE 10
+
 #define SORT_OPTION "--sort"
 
 struct linked_list {
@@ -118,6 +120,7 @@ int main(int argc, char* argv[]) {
 
     int WE_SHOULD_SORT = 0;
     int sort_option_index;
+	char chosen_sorting_algorithm[SORT_OPTION_MAX_SIZE];
 
     if ( argc > 1 ) {
         sort_option_index = parse_sorting_algorithm_from_args(argc, argv);
