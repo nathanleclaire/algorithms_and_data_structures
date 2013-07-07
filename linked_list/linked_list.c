@@ -1,20 +1,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct linkedList {
-	struct linkedList* next;
+struct linked_list {
+	struct linked_list* next;
 	int val;
 };
 
-struct linkedList* alloc_node(struct linkedList* l, int val) {
-	struct linkedList* node;
-    node = (struct linkedList*)malloc( sizeof(struct linkedList) );
+struct linked_list* alloc_node(struct linked_list* l, int val) {
+	struct linked_list* node;
+    node = (struct linked_list*)malloc( sizeof(struct linked_list) );
 	node->val = val;
 	node->next = l;
 	return node;
 }
 
-void append(struct linkedList* node, int val) {
+void append(struct linked_list* node, int val) {
 	if( node->next != NULL ) {
 
 		/* If we are not at the end of the list, keep looking for the end */
@@ -26,7 +26,7 @@ void append(struct linkedList* node, int val) {
 	}
 }
 
-void printList(struct linkedList* l) {
+void printList(struct linked_list* l) {
 	if ( l->next == NULL ) {
 		printf("(%d)\n", l->val);
 	} else {
@@ -35,7 +35,7 @@ void printList(struct linkedList* l) {
 	}
 }
 
-void dumpNodes(struct linkedList* l) {
+void dumpNodes(struct linked_list* l) {
 	if ( l->next == NULL ) {
 		printf("\n");
 	} else {
@@ -46,7 +46,7 @@ void dumpNodes(struct linkedList* l) {
 
 int main(int argc, char* argv[]) {
 
-	struct linkedList* myLL;
+	struct linked_list* myLL;
 	int i;
 
 	if ( argc > 1 ) {
