@@ -15,15 +15,17 @@ struct linked_list {
     int val;
 };
 
-struct linked_list* alloc_node(struct linked_list* l, int val) {
-    struct linked_list* node;
-    node = (struct linked_list*)malloc( sizeof(struct linked_list) );
+typedef struct linked_list linked_list;
+
+linked_list* alloc_node(linked_list* l, int val) {
+    linked_list* node;
+    node = (linked_list*)malloc( sizeof(linked_list) );
     node->val = val;
     node->next = l;
     return node;
 }
 
-void append(struct linked_list* node, int val) {
+void append(linked_list* node, int val) {
     if( node->next != NULL ) {
 
         /* If we are not at the end of the list, keep looking for the end */
@@ -35,7 +37,7 @@ void append(struct linked_list* node, int val) {
     }
 }
 
-void print_list(struct linked_list* l) {
+void print_list(linked_list* l) {
     if ( l->next == NULL ) {
         printf("(%d)\n", l->val);
     } else {
@@ -44,7 +46,7 @@ void print_list(struct linked_list* l) {
     }
 }
 
-void dump_nodes(struct linked_list* l) {
+void dump_nodes(linked_list* l) {
     if ( l->next == NULL ) {
         printf("\n");
     } else {
@@ -53,10 +55,10 @@ void dump_nodes(struct linked_list* l) {
     }
 }
 
-void free_list(struct linked_list** l) {
+void free_list(linked_list** l) {
     /* Free all of the memory allocated with new_node (no leaking) */
     printf("Freeing the list...\n");
-    struct linked_list *to_delete, *tmp_buff;
+    linked_list *to_delete, *tmp_buff;
     to_delete = *l;
     while (to_delete->next != NULL) {
         tmp_buff = to_delete;
@@ -65,23 +67,23 @@ void free_list(struct linked_list** l) {
     }
 }
 
-void bubble_sort(struct linked_list* l) {
+void bubble_sort(linked_list* l) {
 
 }
 
-void shell_sort(struct linked_list* l) {
+void shell_sort(linked_list* l) {
 
 }
 
-void heap_sort(struct linked_list* l) {
+void heap_sort(linked_list* l) {
 
 }
 
-void quick_sort(struct linked_list* l) {
+void quick_sort(linked_list* l) {
 
 }
 
-void merge_sort(struct linked_list* l) {
+void merge_sort(linked_list* l) {
 
 }
 
@@ -111,7 +113,7 @@ int parse_sorting_algorithm_from_args(int argc, char** argv) {
 
 int main(int argc, char* argv[]) {
 
-    struct linked_list* my_ll;
+    linked_list* my_ll;
     int i;
 
     int SHOULD_WE_SORT = 0;
