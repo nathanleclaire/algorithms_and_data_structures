@@ -2,7 +2,7 @@
 
 I'm interested to learn more about the fundamentals of computer science, and get some practice writing C code while I'm at it.  I get a lot of bittersweet joy out of writing C code- it just runs so darn fast, that when it works it's like the greatest feeling in the world.  So it certainly can't help to be sharp at the language.  It's great, in my opinion, to get so close to the metal and harden up after all of those nice, fun handholding languages I write with so much frequency like PHP and Python have turned my brain into mush :D
 
-So far it's not too impressive - an implementation of a linked list, and the skeleton for a binary tree.  I intend to implement most of the infamous sorting algorithms on the linked list, partially just to say that I have done so, and then move on to greener pastures such as hash tables or (_gasp!_) a binary search table reverse.
+So far it's not too impressive - an implementation of a linked list, and the skeleton for a binary tree.  I intend to implement most of the infamous sorting algorithms on the linked list, partially just to say that I have done so, and then move on to greener pastures such as hash tables or (*gasp!*) a binary search table reverse.
 
 I'm very keen on taking a whack at the [Traveling Salesman](http://en.wikipedia.org/wiki/Travelling_salesman_problem) or [K-Armed Bandit](http://en.wikipedia.org/wiki/Multi-armed_bandit) problem as well.
 
