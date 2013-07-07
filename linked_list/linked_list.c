@@ -103,9 +103,7 @@ int parse_sorting_algorithm_from_args(int argc, char** argv) {
 	for (i=1; i < argc; i++) {
 		if (strcmp(argv[i], SORT_OPTION) == 0 && (i+1 < argc)) {
 			/* and next arg in vector is one of our supported search algorithms */
-			if (valid_sorting_algorithm(argv[i+1])) {
-				return i+1;
-			}
+			return i;
 		}
 	}
 	return -1;
@@ -121,22 +119,39 @@ int main(int argc, char* argv[]) {
 
 	if ( argc > 1 ) {
 		sort_option_index = parse_sorting_algorithm_from_args(argc, argv);
+
+		/** TODO:  Make this sort option index code way less annoying.
+		 *	 	   I think if I made the option into one arg, i.e. --sort=quick
+		 *		   that might help.		
+		 **/
 		if (sort_option_index != -1) {
-			printf("The sorting algorithm selected is : %s\n", argv[sort_option_index]);
-			SHOULD_WE_SORT = 1;
+			if (valid_sorting_algorithm(argv[sort_option_index+1])) {
+				printf("The sorting algorithm selected is : %s\n", argv[sort_option_index]);
+				SHOULD_WE_SORT = 1;
+			} else {
+				printf("Unrecognized algorithm for sort.  Ignoring...\n");
+			}
 		} else {
 			printf("No sorting algorithm selected. \n");
 			SHOULD_WE_SORT = 0;
 		}
 
-		// allocate the first node in the linked list
-		// use the first command line arg for the value
+		/* allocate the first node in the linked list
+		   use the first command line arg for the value */
 	
-		my_ll = alloc_node(NULL, atoi(argv[1])); 	
+		if (sort_option_index != 1) {
+			my_ll = alloc_node(NULL, atoi(argv[1]));
+		} else {
+			my_ll = alloc_node(NULL, atoi(argv[3]));
+		}
 
-		// start appending at the second command line argument
+		/* start appending at the second command line argument */
 
 		for(i=2; i < argc; i++) {
+			if ( i == sort_option_index || i == sort_option_index + 1) {
+				/* skip our --sort [type] args if we have them */
+				continue;
+			}
 			append(my_ll, atoi(argv[i]));
 			print_list(my_ll);
 			printf("\n");
