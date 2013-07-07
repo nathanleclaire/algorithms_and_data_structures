@@ -69,8 +69,28 @@ void free_list(linked_list** l) {
     }
 }
 
-void bubble_sort(linked_list* l) {
+void swap_nodes(linked_list **a, linked_list **b) {
+	linked_list *tmp;
+	tmp = (*a);
+	(*a) = (*b);
+	(*b) = tmp;	
+}
 
+void bubble_sort(linked_list* l) {
+	printf("bubble sorting...\n");
+	linked_list *tmp, *head;
+	int sorted = 0;
+	while(!sorted) {
+		sorted = 1;
+		head = l;
+		while(head->next != NULL) {
+			if (head->val > head->next->val) {
+				swap_nodes(&head, &head->next);
+				sorted = 0;
+			}	
+		}		
+		dump_nodes(l);
+	}
 }
 
 void shell_sort(linked_list* l) {
