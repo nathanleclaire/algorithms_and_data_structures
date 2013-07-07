@@ -116,7 +116,7 @@ int main(int argc, char* argv[]) {
     linked_list* my_ll;
     int i;
 
-    int SHOULD_WE_SORT = 0;
+    int WE_SHOULD_SORT = 0;
     int sort_option_index;
 
     if ( argc > 1 ) {
@@ -129,13 +129,13 @@ int main(int argc, char* argv[]) {
         if (sort_option_index != -1) {
             if (valid_sorting_algorithm(argv[sort_option_index+1])) {
                 printf("The sorting algorithm selected is : %s\n", argv[sort_option_index+1]);
-                SHOULD_WE_SORT = 1;
+                WE_SHOULD_SORT = 1;
             } else {
                 printf("Unrecognized algorithm for sort.  Ignoring...\n");
             }
         } else {
             printf("No sorting algorithm selected. \n");
-            SHOULD_WE_SORT = 0;
+            WE_SHOULD_SORT = 0;
         }
 
         /* allocate the first node in the linked list
@@ -157,6 +157,9 @@ int main(int argc, char* argv[]) {
             append(my_ll, atoi(argv[i]));
             print_list(my_ll);
             printf("\n");
+			if (WE_SHOULD_SORT) {
+				
+			}
             dump_nodes(my_ll);
         }
 
