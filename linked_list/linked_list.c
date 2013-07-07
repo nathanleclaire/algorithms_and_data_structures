@@ -53,6 +53,17 @@ void dump_nodes(struct linked_list* l) {
 	}
 }
 
+void free_list(struct linked_list** l) {
+	/* Free all of the memory allocated with new_node (no leaking) */
+	printf("Freeing the list...\n");
+	struct linked_list *to_delete, *tmp_buff;
+	to_delete = *l;
+	while (to_delete->next != NULL) {
+		tmp_buff = to_delete;
+	    to_delete = to_delete->next;
+		free(tmp_buff);
+	}
+}
 
 void bubble_sort(struct linked_list* l) {
 
@@ -133,6 +144,7 @@ int main(int argc, char* argv[]) {
 		}
 
 		print_list(my_ll);
+		free_list(&my_ll);
 
 	} else {
 		printf("Dude, no arguments?  Not cool.\n");
