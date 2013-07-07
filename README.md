@@ -11,7 +11,7 @@ I'm very keen on taking a whack at the [Traveling Salesman](http://en.wikipedia.
 To compile the linked list:
 
 ```
-gcc linked_list.c -O linked_list
+gcc linked_list.c -o linked_list
 ```
 
 Running:
