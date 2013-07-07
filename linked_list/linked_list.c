@@ -181,13 +181,18 @@ int main(int argc, char* argv[]) {
             append(my_ll, atoi(argv[i]));
             print_list(my_ll);
             printf("\n");
-			if (WE_SHOULD_SORT) {
-				
-			}
             dump_nodes(my_ll);
         }
 
+
         print_list(my_ll);
+
+		if (WE_SHOULD_SORT) {
+			if (strcmp(chosen_sorting_algorithm, BUBBLE) == 0) {
+				bubble_sort(my_ll);
+			}	
+		}
+
         free_list(&my_ll);
 
     } else {
