@@ -70,36 +70,43 @@ void free_list(linked_list** l) {
 }
 
 void swap_nodes(linked_list *a, linked_list *b) {
-	int tmp;
-	printf("a is %p, b is %p\n", a, b);
-	//printf("Swapping . . . a->next is %p, b->next is %p\n", a->next, b->next);
-	tmp = a->val;
-	a->val = b->val;
-	b->val = tmp;
-	printf("a is %p, b is %p\n", a, b);
-	//printf("Swapping . . . a->next is %p, b->next is %p\n", a->next, b->next);
+	a->next = b->next;
+	b->next = a;
 }
 
 void bubble_sort(linked_list *l) {
 	printf("bubble sorting...\n");
-	linked_list *head;
-	int sorted = 0;
+	linked_list *head, *prev_node = NULL, *next_node = NULL;
+	int sorted = 0, start_of_array = 1;
 	while(!sorted) {
+		printf("****************************************\n");
+		printf("* Beginning of loop through list . . . *\n");
+		printf("****************************************\n\n");
 		head = l;
 		sorted = 1;
+		prev_node = NULL;
+		next_node = NULL;
 		while(head->next != NULL) {
-			printf("head->next is %p\n", head->next);
-			printf("head->val is %d\n", head->val);
-			if (head->val > head->next->val) {
-				swap_nodes(head, head->next);
-				sorted = 0;
-			} 			
-			head = head->next;
-			sleep(1);
 			print_list(l);
+			printf("l is %p\n", l);
+			printf("head is %p\n", head);
+			printf("head->next is %p\n", head->next);
+			printf("head->val is %d\n\n", head->val);
+			next_node = head->next;
+			if (head->val > head->next->val) {
+				if (prev_node == NULL) {
+					l = head->next;
+				} else {
+					prev_node->next = head->next;
+				}
+				sorted = 0;	
+				swap_nodes(head, head->next);
+			} 
+			prev_node = head;
+			head = next_node;
 		}
-		dump_nodes(l);
 	}
+	printf("SORTED!\n");
 }
 
 void shell_sort(linked_list* l) {
