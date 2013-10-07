@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <string.h>
 #include <iostream>
 #include <time.h>
 #include <tuple>
@@ -8,7 +9,8 @@
 #define LOWERBOUND -100
 #define UPPERBOUND 100
 
-#define PROBLEM_ARRAY_SIZE 100
+#define NAIVE "Naive"
+#define SUAVE "Suave"
 
 using namespace std;
 
@@ -104,7 +106,7 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 	{
 		value_index_vec.push_back(make_tuple(v.at(i), i));
 	}
-	print_value_index_vec(value_index_vec);
+	// print_value_index_vec(value_index_vec);
 	sort(value_index_vec.begin(), value_index_vec.end(), suave_comp);
 	for (i = 0; i < n-2; i++)
 	{
@@ -131,23 +133,40 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 	return three_vec(-1, -1, -1);
 }
 
-int main()
+void print_performance(const clock_t& begin_time)
+{
+	cout << "Performance: " << (float( clock() - begin_time ) / CLOCKS_PER_SEC) << " seconds" << endl;
+}
+
+void print_and_benchmark_indices_version(char* which, vector<int> problem_vector)
+{
+	vector<int> indices;
+	if (strcmp(which, NAIVE) == 0)
+	{
+		indices = three_indices_that_sum_to_zero_naive(problem_vector);
+	}
+	else
+	{
+		indices = three_indices_that_sum_to_zero_suave(problem_vector);
+	}
+	const clock_t begin_time = clock();
+	cout << which << " : ";
+	print_my_vector(indices);
+	cout << endl;
+	print_performance(begin_time);
+}
+
+int main(int argc, char* argv[])
 {
 	srand(time(0));
 	cout << "Initializing..." << endl;
-	vector<int> problem_vector = generate_vector_with_random_integers(PROBLEM_ARRAY_SIZE);
-	vector<int> indices_naive = three_indices_that_sum_to_zero_naive(problem_vector);
-	vector<int> indices_suave = three_indices_that_sum_to_zero_suave(problem_vector);
+	vector<int> problem_vector = generate_vector_with_random_integers(atoi(argv[1]));
+
 	print_my_vector(problem_vector);
 	cout << endl;
 
-	cout << "Naive : ";
-	print_my_vector(indices_naive);
-	cout << endl;
-
-	cout << "Suave : ";
-	print_my_vector(indices_suave);
-	cout << endl;
+	print_and_benchmark_indices_version(NAIVE, problem_vector);
+	print_and_benchmark_indices_version(SUAVE, problem_vector);
 
 	cout << endl;
 	return 0;
