@@ -5,10 +5,10 @@
 #include <vector>
 #include <algorithm>
 
-#define LOWERBOUND -10
-#define UPPERBOUND 10
+#define LOWERBOUND -100
+#define UPPERBOUND 100
 
-#define PROBLEM_ARRAY_SIZE 10
+#define PROBLEM_ARRAY_SIZE 100
 
 using namespace std;
 
@@ -82,6 +82,19 @@ int sum_from_value_index_vec(const vector<tuple<int, int>>& v, int i, int j, int
 	return get<0>(v.at(i)) + get<0>(v.at(i)) + get<0>(v.at(i));
 }
 
+void print_value_index_vec(const vector<tuple<int, int>>& v)
+{
+	cout << "{" << endl;
+	int n = v.size();
+	for (int i = 0; i < n; i++)
+	{
+		tuple<int, int> t = v.at(i);
+		cout << "\t(" << get<0>(t) << ", " << get<1>(t) << ")" << endl;
+	}
+	cout << "}" << endl;
+	
+}
+
 vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 {
 	int i, j, k, n;
@@ -91,11 +104,12 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 	{
 		value_index_vec.push_back(make_tuple(v.at(i), i));
 	}
+	print_value_index_vec(value_index_vec);
 	sort(value_index_vec.begin(), value_index_vec.end(), suave_comp);
 	for (i = 0; i < n-2; i++)
 	{
 		j = i+1;
-		k = n;
+		k = n-1;
 		while (k > j)
 		{
 			if (sum_from_value_index_vec(value_index_vec, i, j, k) == 0)
@@ -113,7 +127,8 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 			}
 
 		}
-	}	
+	}
+	return three_vec(-1, -1, -1);
 }
 
 int main()
@@ -121,10 +136,19 @@ int main()
 	srand(time(0));
 	cout << "Initializing..." << endl;
 	vector<int> problem_vector = generate_vector_with_random_integers(PROBLEM_ARRAY_SIZE);
-	vector<int> indices = three_indices_that_sum_to_zero_naive(problem_vector);
+	vector<int> indices_naive = three_indices_that_sum_to_zero_naive(problem_vector);
+	vector<int> indices_suave = three_indices_that_sum_to_zero_suave(problem_vector);
 	print_my_vector(problem_vector);
 	cout << endl;
-	print_my_vector(indices);
+
+	cout << "Naive : ";
+	print_my_vector(indices_naive);
+	cout << endl;
+
+	cout << "Suave : ";
+	print_my_vector(indices_suave);
+	cout << endl;
+
 	cout << endl;
 	return 0;
 }
