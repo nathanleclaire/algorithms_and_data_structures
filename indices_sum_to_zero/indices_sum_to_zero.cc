@@ -2,7 +2,6 @@
 #include <string.h>
 #include <iostream>
 #include <time.h>
-#include <tuple>
 #include <vector>
 #include <algorithm>
 
@@ -13,6 +12,11 @@
 #define SUAVE "Suave"
 
 using namespace std;
+
+typedef struct index_value_pair {
+	int index;
+	int value;
+} index_value_pair;
 
 int biased_randint(int min, int max)
 {
@@ -73,39 +77,45 @@ vector<int> three_indices_that_sum_to_zero_naive(vector<int> v)
 	return three_vec(-1, -1, -1); 
 }
 
-bool suave_comp(tuple<int, int> a, tuple<int, int> b)
+bool suave_comp(index_value_pair a, index_value_pair b)
 {
-	// tuples are format <value, index> so we compare <0> element
-	return get<0>(a) < get<0>(b);	
+	return a.value < b.value;	
 }
 
-int sum_from_value_index_vec(const vector<tuple<int, int>>& v, int i, int j, int k)
+int sum_from_value_index_vec(const vector<index_value_pair>& v, int i, int j, int k)
 {
-	return get<0>(v.at(i)) + get<0>(v.at(i)) + get<0>(v.at(i));
+	return v.at(i).value + v.at(j).value + v.at(k).value;
 }
 
-void print_value_index_vec(const vector<tuple<int, int>>& v)
+void print_value_index_vec(const vector<index_value_pair>& v)
 {
-	tuple<int, int> t;
+	index_value_pair t;
 	int n = v.size();
 	cout << "{" << endl;
 	for (int i = 0; i < n; i++)
 	{
 		t = v.at(i);
-		cout << "\t(" << get<0>(t) << ", " << get<1>(t) << ")" << endl;
+		cout << "\t(" << t.value << ", " << t.index << ")" << endl;
 	}
 	cout << "}" << endl;
-	
+}
+
+index_value_pair make_index_value_pair(int index, int value)
+{
+	index_value_pair ivp;
+	ivp.index = index;
+	ivp.value = value;
+	return ivp;
 }
 
 vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 {
 	int i, j, k, n, sum;
 	n = v.size();
-	vector<tuple<int, int>> value_index_vec;
+	vector<index_value_pair> value_index_vec;
 	for (i = 0; i < n; i++) 
 	{
-		value_index_vec.push_back(make_tuple(v.at(i), i));
+		value_index_vec.push_back(make_index_value_pair(i, v.at(i)));
 	}
 	// print_value_index_vec(value_index_vec);
 	sort(value_index_vec.begin(), value_index_vec.end(), suave_comp);
@@ -118,7 +128,7 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 			sum = sum_from_value_index_vec(value_index_vec, i, j, k);
 			if (sum == 0)
 			{
-				return three_vec(get<1>(value_index_vec.at(i)), get<1>(value_index_vec.at(j)), get<1>(value_index_vec.at(k)));   
+				return three_vec(value_index_vec.at(i).index, value_index_vec.at(j).index, value_index_vec.at(k).index);   
 			}
 
 			if (sum > 0)
@@ -166,7 +176,7 @@ int main(int argc, char* argv[])
 	cout << "Initializing..." << endl;
 	vector<int> problem_vector = generate_vector_with_random_integers(atoi(argv[1]));
 
-	print_my_vector(problem_vector);
+	// print_my_vector(problem_vector);
 	cout << endl;
 
 	print_and_benchmark_indices_version(NAIVE, problem_vector);
