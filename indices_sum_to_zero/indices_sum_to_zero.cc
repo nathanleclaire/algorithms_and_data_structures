@@ -86,11 +86,12 @@ int sum_from_value_index_vec(const vector<tuple<int, int>>& v, int i, int j, int
 
 void print_value_index_vec(const vector<tuple<int, int>>& v)
 {
-	cout << "{" << endl;
+	tuple<int, int> t;
 	int n = v.size();
+	cout << "{" << endl;
 	for (int i = 0; i < n; i++)
 	{
-		tuple<int, int> t = v.at(i);
+		t = v.at(i);
 		cout << "\t(" << get<0>(t) << ", " << get<1>(t) << ")" << endl;
 	}
 	cout << "}" << endl;
@@ -99,7 +100,7 @@ void print_value_index_vec(const vector<tuple<int, int>>& v)
 
 vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 {
-	int i, j, k, n;
+	int i, j, k, n, sum;
 	n = v.size();
 	vector<tuple<int, int>> value_index_vec;
 	for (i = 0; i < n; i++) 
@@ -114,12 +115,13 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 		k = n-1;
 		while (k > j)
 		{
-			if (sum_from_value_index_vec(value_index_vec, i, j, k) == 0)
+			sum = sum_from_value_index_vec(value_index_vec, i, j, k);
+			if (sum == 0)
 			{
 				return three_vec(get<1>(value_index_vec.at(i)), get<1>(value_index_vec.at(j)), get<1>(value_index_vec.at(k)));   
 			}
 
-			if (sum_from_value_index_vec(value_index_vec, i, j, k) > 0)
+			if (sum > 0)
 			{
 				k--;
 			}
@@ -135,25 +137,27 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 
 void print_performance(const clock_t& begin_time)
 {
-	cout << "Performance: " << (float( clock() - begin_time ) / CLOCKS_PER_SEC) << " seconds" << endl;
+	cout << "Performance: " << clock() - begin_time << " ticks" << endl;
 }
 
-void print_and_benchmark_indices_version(char* which, vector<int> problem_vector)
+void print_and_benchmark_indices_version(char* which, const vector<int>& problem_vector)
 {
 	vector<int> indices;
+	const clock_t begin_time = clock();
 	if (strcmp(which, NAIVE) == 0)
 	{
+		cout << "Using naive..." << endl;
 		indices = three_indices_that_sum_to_zero_naive(problem_vector);
 	}
 	else
 	{
+		cout << "Using suave..." << endl;
 		indices = three_indices_that_sum_to_zero_suave(problem_vector);
 	}
-	const clock_t begin_time = clock();
+	print_performance(begin_time);
 	cout << which << " : ";
 	print_my_vector(indices);
 	cout << endl;
-	print_performance(begin_time);
 }
 
 int main(int argc, char* argv[])
