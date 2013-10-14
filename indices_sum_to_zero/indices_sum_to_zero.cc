@@ -5,8 +5,8 @@
 #include <vector>
 #include <algorithm>
 
-#define LOWERBOUND -100
-#define UPPERBOUND 100
+#define LOWERBOUND -100000000
+#define UPPERBOUND 100000000
 
 #define NAIVE "Naive"
 #define SUAVE "Suave"
