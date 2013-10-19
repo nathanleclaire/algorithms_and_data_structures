@@ -1,8 +1,30 @@
 class Rotate {
-	private class MatrixRotater {
+	private static class MatrixRotater {
 		// Prereq: matrix is NxN
-		public String[][] rotate90(String[][] matrix) {
-			return matrix;	
+		static public String[][] rotate90(String[][] matrix) {
+			int n = matrix[0].length;
+			for (int layer=0; layer < n / 2; layer++) {
+				int first = layer;
+				int last = n - 1 - layer;
+				for(int i=first; i < last; i++) {
+					int offset = i - first;
+					// save top
+					String top = matrix[first][i];
+
+					// left -> top
+					matrix[first][i] = matrix[last-offset][first];
+
+					// bottom -> left
+					matrix[last-offset][first] = matrix[last][last-offset];
+
+					// right -> bottom
+					matrix[last][last-offset] = matrix[i][last];
+
+					// top -> right
+					matrix[i][last] = top;
+				}
+			}
+			return matrix;
 		}
 
 	}
@@ -34,5 +56,7 @@ class Rotate {
 
 		// MatrixRotater matrixRotater = new MatrixRotater();
 		MatrixPrinter.printMatrix(matrix);
+		System.out.println("Rotating...");
+		MatrixPrinter.printMatrix(MatrixRotater.rotate90(matrix));
 	}
 }
