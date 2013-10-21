@@ -10,7 +10,9 @@ public class Node {
 		Node dedupedNode = new Node(next.val);
 		Node n = next;
 		while (n.next != null) {
-			dedupedNode.appendToTailDedupe(n.val);
+			if (n.val != val) {
+				dedupedNode.appendToTailDedupe(n.val);
+			}
 			n = n.next;
 		}
 		next = dedupedNode;
@@ -35,7 +37,9 @@ public class Node {
 			}
 			n = n.next;
 		}
-		n.next = end;
+		if (d != n.val) {
+			n.next = end;
+		}
 	}
 
 	public void print() {
