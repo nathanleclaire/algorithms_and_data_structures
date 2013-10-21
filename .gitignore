@@ -1,3 +1,4 @@
 *.orig
 *.sw*
 a.out
+*.class
