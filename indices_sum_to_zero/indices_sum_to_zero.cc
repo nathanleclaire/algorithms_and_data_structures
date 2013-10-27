@@ -5,13 +5,13 @@
 #include <vector>
 #include <algorithm>
 
-#define LOWERBOUND -100000000
-#define UPPERBOUND 100000000
-
-#define NAIVE "Naive"
-#define SUAVE "Suave"
-
 using namespace std;
+
+static int LOWERBOUND = -100000000;
+static int UPPERBOUND = 100000000;
+
+static string NAIVE = "Naive";
+static string SUAVE = "Suave";
 
 typedef struct index_value_pair {
 	int index;
@@ -150,11 +150,11 @@ void print_performance(const clock_t& begin_time)
 	cout << "Performance: " << clock() - begin_time << " ticks" << endl;
 }
 
-void print_and_benchmark_indices_version(char* which, const vector<int>& problem_vector)
+void print_and_benchmark_indices_version(string which, const vector<int>& problem_vector)
 {
 	vector<int> indices;
 	const clock_t begin_time = clock();
-	if (strcmp(which, NAIVE) == 0)
+	if (which == NAIVE)
 	{
 		cout << "Using naive..." << endl;
 		indices = three_indices_that_sum_to_zero_naive(problem_vector);
