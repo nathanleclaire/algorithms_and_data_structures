@@ -51,7 +51,7 @@ void print_my_vector(const vector<int>& v)
 
 vector<int> three_vec(int i, int j, int k)
 {
-	static const int arr[] = {i, j, k};
+	int arr[] = {i, j, k};
 	vector<int> indices (arr, arr + sizeof(arr) / sizeof(arr[0]));
 	return indices;
 }
@@ -128,6 +128,7 @@ vector<int> three_indices_that_sum_to_zero_suave(vector<int> v)
 			sum = sum_from_value_index_vec(value_index_vec, i, j, k);
 			if (sum == 0)
 			{
+				cout << "The elements: " << value_index_vec.at(i).value << " " << value_index_vec.at(j).value << " " << value_index_vec.at(k).value << endl;
 				return three_vec(value_index_vec.at(i).index, value_index_vec.at(j).index, value_index_vec.at(k).index);   
 			}
 
